@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result Lookup</title>
+    <script>
+        async function fetchResult() {
+            let rollNumber = document.getElementById("rollNumber").value;
+            let response = await fetch("results.json");
+            let data = await response.json();
+            
+            let student = data.find(s => s.roll == rollNumber);
+            
+            if (student) {
+                document.getElementById("result").innerHTML = `
+                    <h3>Name: ${student.name}</h3>
+                    <p>Total Marks: ${student.total}</p>
+                    <p>Percentage: ${student.percentage}%</p>
+                    <p>Status: ${student.pass}</p>
+                `;
+            } else {
+                document.getElementById("result").innerHTML = "<p>No result found!</p>";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Enter Your Roll Number</h2>
+    <input type="text" id="rollNumber">
+    <button onclick="fetchResult()">Check Result</button>
+    <div id="result"></div>
+</body>
+</html>
